@@ -1,0 +1,20 @@
+name: Keep Render App Alive
+
+on:
+  schedule:
+    # Runs every 10 minutes (cron syntax)
+    - cron: '*/10 * * * *'
+  # Allows you to manually trigger from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  ping-render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render App Endpoint
+        run: |
+          echo "Pinging your Render app..."
+          curl -s -o /dev/null -w "Status: %{http_code}" "https://finall-gb6w.onrender.com/api/messages/"
+          echo ""
+          echo "Ping completed at $(date)"
+
